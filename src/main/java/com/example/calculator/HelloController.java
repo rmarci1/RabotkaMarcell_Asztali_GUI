@@ -49,6 +49,32 @@ public class HelloController {
             if(first_input.getText().isEmpty() || second_input.getText().isEmpty()){
                 throw new IllegalArgumentException("All fields must be filled");
             }
+            switch (operation){
+                case "plus" : {
+                    cal = Double.parseDouble(first_input.getText()) + Double.parseDouble(second_input.getText());
+                    break;
+                }
+                case "minus": {
+                    cal = Double.parseDouble(first_input.getText()) - Double.parseDouble(second_input.getText());
+                    break;
+                }
+                case "multiply": {
+                    cal = Double.parseDouble(first_input.getText()) * Double.parseDouble(second_input.getText());
+                    break;
+                }
+                case "divide" : {
+                    if(Double.parseDouble(second_input.getText()) == 0){
+                        throw new ArithmeticException("Cannot divide by zero");
+                    }
+                    cal = Math.round((Double.parseDouble(first_input.getText()) / Double.parseDouble(second_input.getText())*100.0)/100.0);
+                    break;
+                }
+                case "percentage" : {
+                    cal = Double.parseDouble(first_input.getText()) % Double.parseDouble(second_input.getText());
+                    break;
+                }
+            }
+            number.setText(String.valueOf(cal));
         }
         catch (NumberFormatException e){
             showAlert("Invalid input","Please enter valid numbers");
@@ -56,32 +82,7 @@ public class HelloController {
         catch(IllegalArgumentException | ArithmeticException e){
             showAlert("Error",e.getMessage());
         }
-        switch (operation){
-            case "plus" : {
-                cal = Double.parseDouble(first_input.getText()) + Double.parseDouble(second_input.getText());
-                break;
-            }
-            case "minus": {
-                cal = Double.parseDouble(first_input.getText()) - Double.parseDouble(second_input.getText());
-                break;
-            }
-            case "multiply": {
-                cal = Double.parseDouble(first_input.getText()) * Double.parseDouble(second_input.getText());
-                break;
-            }
-            case "divide" : {
-                if(Double.parseDouble(second_input.getText()) == 0){
-                    throw  new ArithmeticException("Cannot divide by zero.");
-                }
-                cal = Math.round((Double.parseDouble(first_input.getText()) / Double.parseDouble(second_input.getText())*100.0)/100.0);
-                break;
-            }
-            case "percentage" : {
-                cal = Double.parseDouble(first_input.getText()) % Double.parseDouble(second_input.getText());
-                break;
-            }
-        }
-        number.setText(String.valueOf(cal));
+
 
     }
     private void showAlert(String title, String message){
